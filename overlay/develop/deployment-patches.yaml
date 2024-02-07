@@ -26,7 +26,7 @@ spec:
             defaultMode: 420   
       containers:
       - name: moodle
-        image: $EXTERNAL_URL
+        image: ${EXTERNAL_URL}
         volumeMounts:
           - name: moodle-data
             mountPath: /opt/app-root/moodledata
