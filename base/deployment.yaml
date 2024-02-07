@@ -52,8 +52,13 @@ metadata:
   name: mariadb
   labels:
     app.openshift.io/runtime: mariadb
-    template: mariadb-ephemeral-template
-    template.openshift.io/template-instance-owner: 5141732c-e33c-4366-82db-f5775278edc6
+  labels:
+    app: moodle
+    app.kubernetes.io/component: moodle
+    app.kubernetes.io/instance: moodle
+    app.kubernetes.io/name: mariadb
+    app.kubernetes.io/part-of: moodle
+    app.openshift.io/runtime: mariadb
 spec:
   strategy:
     type: Recreate
