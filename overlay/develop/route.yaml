@@ -1,0 +1,21 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: moodle
+  labels:
+    app: moodle
+    app.kubernetes.io/component: moodle
+    app.kubernetes.io/instance: moodle
+    app.kubernetes.io/name: moodle
+    app.kubernetes.io/part-of: moodle
+spec:
+  host: moodle-mpizarro-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com
+  to:
+    kind: Service
+    name: moodle
+    weight: 100
+  port:
+    targetPort: 8080-tcp
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect      

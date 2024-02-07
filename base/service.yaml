@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: moodle
+    app.kubernetes.io/component: moodle
+    app.kubernetes.io/instance: moodle
+    app.kubernetes.io/name: moodle
+    app.kubernetes.io/part-of: moodle
+    app.openshift.io/runtime: php
+  name: moodle
+spec:
+  ports:
+    - name: 8080-tcp
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+  selector:
+    app: moodle
+    deployment: moodle
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: mariadb
+    app.kubernetes.io/component: mariadb
+    app.kubernetes.io/instance: mariadb
+    app.kubernetes.io/name: mariadb
+    app.kubernetes.io/part-of: moodle
+  name: mariadb
+spec:
+  ports:
+    - name: 8080-tcp
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+  selector:
+    app: mariadb
+    deployment: mariadb    

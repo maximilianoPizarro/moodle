@@ -1,0 +1,297 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: moodle-workspace
+spec:
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  name: s2i-php-74
+spec:
+  description: >-
+    s2i-php task clones a Git repository and builds and pushes a container image
+    using S2I and a PHP builder image.
+  params:
+    - default: latest
+      description: The tag of php imagestream for php version
+      name: VERSION
+      type: string
+    - default: .
+      description: The location of the path to run s2i from.
+      name: PATH_CONTEXT
+      type: string
+    - default: 'true'
+      description: >-
+        Verify the TLS on the registry endpoint (for push/pull to a non-TLS
+        registry)
+      name: TLSVERIFY
+      type: string
+    - description: Location of the repo where image has to be pushed
+      name: IMAGE
+      type: string
+    - default: >-
+        registry.redhat.io/rhel8/buildah@sha256:55f5c7d88c77e1ab5a2ab8e877172b2b66cb196e21f10dc45148470d0ee8bbae
+      description: The location of the buildah builder image.
+      name: BUILDER_IMAGE
+      type: string
+    - default: 'false'
+      description: Skip pushing the built image
+      name: SKIP_PUSH
+      type: string
+    - default: []
+      description: Environment variables to set during _build-time_.
+      name: ENV_VARS
+      type: array
+  results:
+    - description: Digest of the image just built.
+      name: IMAGE_DIGEST
+      type: string
+  steps:
+    - args:
+        - '$(params.ENV_VARS[*])'
+      computeResources: {}
+      env:
+        - name: HOME
+          value: /tekton/home
+      image: >-
+        registry.redhat.io/source-to-image/source-to-image-rhel8@sha256:6a6025914296a62fdf2092c3a40011bd9b966a6806b094d51eec5e1bd5026ef4
+      name: generate
+      script: >
+        echo "Processing Build Environment Variables"
+
+        echo "" > /env-vars/env-file
+
+        for var in "$@"
+
+        do
+            echo "$var" >> /env-vars/env-file
+        done
+
+
+
+        s2i build $(params.PATH_CONTEXT)
+        image-registry.openshift-image-registry.svc:5000/$(params.VERSION) \
+
+        --as-dockerfile /gen-source/Dockerfile.gen --environment-file
+        /env-vars/env-file
+      volumeMounts:
+        - mountPath: /gen-source
+          name: gen-source
+        - mountPath: /env-vars
+          name: env-vars
+      workingDir: $(workspaces.source.path)
+    - computeResources: {}
+      image: $(params.BUILDER_IMAGE)
+      name: build-and-push
+      script: >
+        buildah bud --storage-driver=vfs --tls-verify=$(params.TLSVERIFY) \
+           --layers -f /gen-source/Dockerfile.gen -t $(params.IMAGE) .
+
+        [[ "$(params.SKIP_PUSH)" == "true" ]] && echo "Push skipped" && exit 0
+
+        [[ "$(workspaces.dockerconfig.bound)" == "true" ]] && export
+        DOCKER_CONFIG="$(workspaces.dockerconfig.path)"
+
+        buildah push --storage-driver=vfs --tls-verify=$(params.TLSVERIFY) \
+          --digestfile $(workspaces.source.path)/image-digest $(params.IMAGE) \
+          docker://$(params.IMAGE)
+
+        cat $(workspaces.source.path)/image-digest | tee
+        /tekton/results/IMAGE_DIGEST
+      securityContext:
+        capabilities:
+          add:
+            - SETFCAP
+      volumeMounts:
+        - mountPath: /var/lib/containers
+          name: varlibcontainers
+        - mountPath: /gen-source
+          name: gen-source
+      workingDir: /gen-source
+  volumes:
+    - emptyDir: {}
+      name: varlibcontainers
+    - emptyDir: {}
+      name: gen-source
+    - emptyDir: {}
+      name: env-vars
+  workspaces:
+    - mountPath: /workspace/source
+      name: source
+    - description: >-
+        An optional workspace that allows providing a .docker/config.json file
+        for Buildah to access the container registry. The file should be placed
+        at the root of the Workspace with name config.json.
+      name: dockerconfig
+      optional: true
+---
+apiVersion: tekton.dev/v1
+kind: Pipeline
+metadata:
+  labels:
+    app.kubernetes.io/instance: moodle
+    app.kubernetes.io/name: moodle
+    operator.tekton.dev/operand-name: openshift-pipelines-addons
+    pipeline.openshift.io/runtime: php74
+    pipeline.openshift.io/runtime-version: php74
+    pipeline.openshift.io/type: kubernetes
+  name: moodle
+spec:
+  params:
+    - default: moodle
+      name: APP_NAME
+      type: string
+    - default: 'https://github.com/moodle/moodle'
+      name: GIT_REPO
+      type: string
+    - default: MOODLE_311_STABLE
+      name: GIT_REVISION
+      type: string
+    - default: 'image-registry.openshift-image-registry.svc:5000/mpizarro-dev/moodle-311'
+      name: IMAGE_NAME
+      type: string
+    - default: .
+      name: PATH_CONTEXT
+      type: string
+    - default: 'mpizarro-dev/php-74:latest'
+      name: VERSION
+      type: string
+    - default: moodle-mpizarro-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com
+      name: EXTERNAL_URL
+      type: string
+  tasks:
+    - name: fetch-moodle-repository
+      params:
+        - name: url
+          value: $(params.GIT_REPO)
+        - name: revision
+          value: $(params.GIT_REVISION)
+        - name: subdirectory
+          value: ''
+        - name: deleteExisting
+          value: 'true'
+      runAfter:
+        - oc-apply-manifest
+      taskRef:
+        kind: ClusterTask
+        name: git-clone
+      workspaces:
+        - name: output
+          workspace: workspace
+    - name: deploy
+      params:
+        - name: SCRIPT
+          value: oc rollout status deploy/$(params.APP_NAME)
+      runAfter:
+        - build-php74
+      taskRef:
+        kind: ClusterTask
+        name: openshift-client
+    - name: build-php74
+      params:
+        - name: VERSION
+          value: $(params.VERSION)
+        - name: PATH_CONTEXT
+          value: .
+        - name: TLSVERIFY
+          value: 'true'
+        - name: IMAGE
+          value: $(params.IMAGE_NAME)
+        - name: BUILDER_IMAGE
+          value: >-
+            registry.redhat.io/rhel8/buildah@sha256:55f5c7d88c77e1ab5a2ab8e877172b2b66cb196e21f10dc45148470d0ee8bbae
+        - name: SKIP_PUSH
+          value: 'false'
+        - name: ENV_VARS
+          value: []
+      runAfter:
+        - oc-start-build-php74-ubi
+      taskRef:
+        kind: Task
+        name: s2i-php-74
+      workspaces:
+        - name: source
+          workspace: workspace
+    - name: oc-start-build-php74-ubi
+      params:
+        - name: SCRIPT
+          value: oc start-build bc/php-74-moodle
+        - name: VERSION
+          value: latest
+      runAfter:
+        - fetch-moodle-repository
+      taskRef:
+        kind: ClusterTask
+        name: openshift-client
+      workspaces:
+        - name: manifest-dir
+          workspace: workspace
+    - name: fetch-moodle-gitops
+      params:
+        - name: url
+          value: 'https://github.com/maximilianoPizarro/moodle'
+        - name: revision
+          value: main
+        - name: refspec
+          value: ''
+        - name: submodules
+          value: 'true'
+        - name: depth
+          value: '1'
+        - name: sslVerify
+          value: 'true'
+        - name: crtFileName
+          value: ca-bundle.crt
+        - name: subdirectory
+          value: gitops
+        - name: sparseCheckoutDirectories
+          value: ''
+        - name: deleteExisting
+          value: 'true'
+        - name: httpProxy
+          value: ''
+        - name: httpsProxy
+          value: ''
+        - name: noProxy
+          value: ''
+        - name: verbose
+          value: 'true'
+        - name: gitInitImage
+          value: >-
+            registry.redhat.io/openshift-pipelines/pipelines-git-init-rhel8@sha256:c4b2183f7c7997bd401d86b33eefb637b3ef2fa90618e875106292cd69a15c14
+        - name: userHome
+          value: /home/git
+      taskRef:
+        kind: ClusterTask
+        name: git-clone
+      workspaces:
+        - name: output
+          workspace: workspace
+    - name: oc-apply-manifest
+      params:
+        - name: SCRIPT
+          value: >-
+            oc process gitops/overlay/develop/deployment-patches.yaml -p
+            EXTERNAL_URL=$(params.EXTERNAL_URL)
+
+
+            oc apply -k gitops/overlay/develop 
+        - name: VERSION
+          value: latest
+      runAfter:
+        - fetch-moodle-gitops
+      taskRef:
+        kind: ClusterTask
+        name: openshift-client
+      workspaces:
+        - name: manifest-dir
+          workspace: workspace
+  workspaces:
+    - name: workspace
