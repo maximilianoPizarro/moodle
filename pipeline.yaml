@@ -279,7 +279,7 @@ spec:
         - name: SCRIPT
           value: >-
             oc process gitops/overlay/develop/deployment-patches.yaml -p
-            EXTERNAL_URL=$(params.EXTERNAL_URL)
+            IMAGE_NAME=$(params.IMAGE_NAME)
 
 
             oc apply -k gitops/overlay/develop 

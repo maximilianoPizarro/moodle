@@ -1,44 +1,35 @@
-apiVersion: template.openshift.io/v1
-kind: Template
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: moodle-template
-parameters:
-  - name: IMAGE_NAME
-    required: true
-
-objects:
-- apiVersion: apps/v1
-  kind: Deployment
-  metadata:
-    name: moodle
-    annotations:
-      image.openshift.io/triggers: |-
-        [
-          {
-            "from": {
-              "kind": "ImageStreamTag",
-              "name": "moodle:latest"
-            },
-            "fieldPath": "spec.template.spec.containers[0].image"
-          }
-        ]
-  spec:
-    template:
-      spec:
-        volumes:
+  name: moodle
+  annotations:
+    image.openshift.io/triggers: |-
+      [
+        {
+          "from": {
+            "kind": "ImageStreamTag",
+            "name": "moodle:latest"
+          },
+          "fieldPath": "spec.template.spec.containers[0].image"
+        }
+      ]
+spec:
+  template:
+    spec:
+      volumes:
+        - name: moodle-data
+          persistentVolumeClaim:
+            claimName: moodle-data
+        - name: moodle-configuration-volume
+          configMap:
+            name: moodle-configuration
+            defaultMode: 420   
+      containers:
+      - name: moodle
+        image: ${IMAGE_NAME}
+        volumeMounts:
           - name: moodle-data
-            persistentVolumeClaim:
-              claimName: moodle-data
+            mountPath: /opt/app-root/moodledata
           - name: moodle-configuration-volume
-            configMap:
-              name: moodle-configuration
-              defaultMode: 420   
-        containers:
-        - name: moodle
-          image: ${IMAGE_NAME}
-          volumeMounts:
-            - name: moodle-data
-              mountPath: /opt/app-root/moodledata
-            - name: moodle-configuration-volume
-              mountPath: /opt/app-root/src/config.php
-              subPath: config.php      
+            mountPath: /opt/app-root/src/config.php
+            subPath: config.php      
