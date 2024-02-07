@@ -50,7 +50,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mariadb
-  namespace: mpizarro-dev
   labels:
     app.openshift.io/runtime: mariadb
     template: mariadb-ephemeral-template
