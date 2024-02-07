@@ -31,10 +31,10 @@ metadata:
   name: mariadb
 spec:
   ports:
-    - name: 8080-tcp
+    - name: 3306-tcp
       protocol: TCP
-      port: 8080
-      targetPort: 8080
+      port: 3306
+      targetPort: 3306
   selector:
     app: mariadb
     deployment: mariadb    
