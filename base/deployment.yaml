@@ -51,11 +51,9 @@ kind: Deployment
 metadata:
   name: mariadb
   labels:
-    app.openshift.io/runtime: mariadb
-  labels:
-    app: moodle
-    app.kubernetes.io/component: moodle
-    app.kubernetes.io/instance: moodle
+    app: mariadb
+    app.kubernetes.io/component: mariadb
+    app.kubernetes.io/instance: mariadb
     app.kubernetes.io/name: mariadb
     app.kubernetes.io/part-of: moodle
     app.openshift.io/runtime: mariadb
