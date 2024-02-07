@@ -154,16 +154,17 @@ spec:
     - default: MOODLE_311_STABLE
       name: GIT_REVISION
       type: string
-    - default: 'image-registry.openshift-image-registry.svc:5000/mpizarro-dev/moodle-311'
+    - default: >-
+        image-registry.openshift-image-registry.svc:5000/maximilianopizarro5-dev/moodle
       name: IMAGE_NAME
       type: string
     - default: .
       name: PATH_CONTEXT
       type: string
-    - default: 'mpizarro-dev/php-74:latest'
+    - default: 'maximilianopizarro5-dev/php-74:latest'
       name: VERSION
       type: string
-    - default: moodle-mpizarro-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com
+    - default: moodle-maximilianopizarro5-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com
       name: EXTERNAL_URL
       type: string
   tasks:
@@ -277,12 +278,7 @@ spec:
     - name: oc-apply-manifest
       params:
         - name: SCRIPT
-          value: >-
-            oc process gitops/overlay/develop/deployment-patches.yaml -p
-            IMAGE_NAME=$(params.IMAGE_NAME)
-
-
-            oc apply -k gitops/overlay/develop 
+          value: 'oc apply -k gitops/overlay/develop '
         - name: VERSION
           value: latest
       runAfter:
@@ -308,8 +304,7 @@ spec:
 
             echo "patch host"
 
-            yq e -i
-            '.spec.template.spec.containers[0].image="$(params.EXTERNAL_URL)"'
+            yq e -i '.spec.host="$(params.EXTERNAL_URL)"'
             gitops/overlay/develop/route.yaml
 
             cat gitops/overlay/develop/route.yaml
