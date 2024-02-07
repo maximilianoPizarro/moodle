@@ -154,7 +154,7 @@ spec:
     - default: MOODLE_311_STABLE
       name: GIT_REVISION
       type: string
-    - default: 'image-registry.openshift-image-registry.svc:5000/mpizarro-dev/moodle-311'
+    - default: 'image-registry.openshift-image-registry.svc:5000/mpizarro-dev/moodle'
       name: IMAGE_NAME
       type: string
     - default: .
