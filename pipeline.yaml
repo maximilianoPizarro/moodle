@@ -161,7 +161,7 @@ spec:
     - default: .
       name: PATH_CONTEXT
       type: string
-    - default: 'maximilianopizarro5-dev/php-74:latest'
+    - default: 'maximilianopizarro5-dev/php-74'
       name: VERSION
       type: string
     - default: moodle-maximilianopizarro5-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com
