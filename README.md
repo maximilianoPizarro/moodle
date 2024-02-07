@@ -11,6 +11,10 @@ El propósito de este proyecto consiste en generar los objetos kubernetes en bas
 
 Se verifico el funcionamiento en [Sandbox RedHat OpenShift Dedicated](https://developers.redhat.com/developer-sandbox) (Openshift 4.14.1). 
 
+<p align="left">
+  <img src="https://github.com/maximilianoPizarro/moodle/blob/master/image/image311.PNG?raw=true" width="684" title="Run On Openshift">
+</p>  
+
 
 ## Instalación
 
@@ -26,3 +30,8 @@ bash-4.4 ~ $ oc apply -f https://raw.githubusercontent.com/maximilianoPizarro/mo
 persistentvolumeclaim/moodle-workspace created
 task.tekton.dev/s2i-php-74 configured
 pipeline.tekton.dev/moodle configured
+
+
+<p align="left">
+  <img src="https://github.com/maximilianoPizarro/moodle/blob/master/image/image311ocp.PNG?raw=true" width="684" title="Run On Openshift">
+</p>  

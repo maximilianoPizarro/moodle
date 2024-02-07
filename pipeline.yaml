@@ -168,7 +168,7 @@ spec:
       name: EXTERNAL_URL
       type: string
   tasks:
-    - name: fetch-moodle-repository
+    - name: fetch-repository
       params:
         - name: url
           value: $(params.GIT_REPO)
@@ -191,11 +191,11 @@ spec:
         - name: SCRIPT
           value: oc rollout status deploy/$(params.APP_NAME)
       runAfter:
-        - build-php74
+        - build-moodle
       taskRef:
         kind: ClusterTask
         name: openshift-client
-    - name: build-php74
+    - name: build-moodle
       params:
         - name: VERSION
           value: $(params.VERSION)
@@ -213,28 +213,28 @@ spec:
         - name: ENV_VARS
           value: []
       runAfter:
-        - oc-start-build-php74-ubi
+        - build-php74-ubi
       taskRef:
         kind: Task
         name: s2i-php-74
       workspaces:
         - name: source
           workspace: workspace
-    - name: oc-start-build-php74-ubi
+    - name: build-php74-ubi
       params:
         - name: SCRIPT
           value: oc start-build bc/php-74-moodle
         - name: VERSION
           value: latest
       runAfter:
-        - fetch-moodle-repository
+        - fetch-repository
       taskRef:
         kind: ClusterTask
         name: openshift-client
       workspaces:
         - name: manifest-dir
           workspace: workspace
-    - name: fetch-moodle-gitops
+    - name: fetch-gitops
       params:
         - name: url
           value: 'https://github.com/maximilianoPizarro/moodle'
@@ -282,14 +282,14 @@ spec:
         - name: VERSION
           value: latest
       runAfter:
-        - yq
+        - yq-patch
       taskRef:
         kind: ClusterTask
         name: openshift-client
       workspaces:
         - name: manifest-dir
           workspace: workspace
-    - name: yq
+    - name: yq-patch
       params:
         - name: SCRIPT
           value: >-
@@ -316,7 +316,7 @@ spec:
         - name: expression
           value: ''
       runAfter:
-        - fetch-moodle-gitops
+        - fetch-gitops
       taskRef:
         kind: Task
         name: yq
