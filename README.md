@@ -12,7 +12,7 @@ El propósito de este proyecto consiste en generar los objetos kubernetes en bas
 Se verifico el funcionamiento en [Sandbox RedHat OpenShift Dedicated](https://developers.redhat.com/developer-sandbox) (Openshift 4.14.1). 
 
 <p align="left">
-  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/image/image311.PNG?raw=true" width="684" title="Run On Openshift">
+  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/tekton311.PNG?raw=true" width="684" title="Run On Openshift">
 </p>  
 
 
@@ -33,5 +33,5 @@ pipeline.tekton.dev/moodle configured
 
 
 <p align="left">
-  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/image/image311ocp.PNG?raw=true" width="684" title="Run On Openshift">
+  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/topology311ocp.PNG?raw=true" width="684" title="Run On Openshift">
 </p>  
