@@ -90,5 +90,25 @@ data:
       $CFG->tool_generator_users_password = 'Pass111!';
 
       require_once(__DIR__ . '/lib/setup.php'); // Do not edit
+---
+kind: Secret
+apiVersion: v1
+metadata:
+  name: mariadb
+  labels:
+    app.openshift.io/runtime: mariadb
+    template: mariadb-ephemeral-template
+    template.openshift.io/template-instance-owner: 5141732c-e33c-4366-82db-f5775278edc6
+  annotations:
+    template.openshift.io/expose-database_name: '{.data[''database-name'']}'
+    template.openshift.io/expose-password: '{.data[''database-password'']}'
+    template.openshift.io/expose-root_password: '{.data[''database-root-password'']}'
+    template.openshift.io/expose-username: '{.data[''database-user'']}'
+data:
+  database-name: bW9vZGxlZGI=
+  database-password: bW9vZGxl
+  database-root-password: bW9vZGxl
+  database-user: bW9vZGxl
+type: Opaque
 
       

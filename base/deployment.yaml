@@ -46,12 +46,15 @@ spec:
   revisionHistoryLimit: 10
   progressDeadlineSeconds: 600
 ---
-kind: Deployment
 apiVersion: apps/v1
+kind: Deployment
 metadata:
   name: mariadb
+  namespace: mpizarro-dev
   labels:
     app.openshift.io/runtime: mariadb
+    template: mariadb-ephemeral-template
+    template.openshift.io/template-instance-owner: 5141732c-e33c-4366-82db-f5775278edc6
 spec:
   strategy:
     type: Recreate
@@ -59,29 +62,19 @@ spec:
       timeoutSeconds: 600
     resources: {}
     activeDeadlineSeconds: 21600
-  triggers:
-    - type: ImageChange
-      imageChangeParams:
-        automatic: true
-        containerNames:
-          - mariadb
-        from:
-          kind: ImageStreamTag
-          namespace: openshift
-          name: 'mariadb:10.3-el8'
-        lastTriggeredImage: >-
-          image-registry.openshift-image-registry.svc:5000/openshift/mariadb@sha256:513f7db527608c6c96b3659220ffc0397bdd30ff6617dad1790a90e14ac4f3b0
-    - type: ConfigChange
   replicas: 1
   revisionHistoryLimit: 10
   test: false
   selector:
-    name: mariadb
+    matchLabels:
+      app: mariadb
   template:
     metadata:
       creationTimestamp: null
       labels:
-        name: mariadb
+        app: mariadb
+        app.openshift.io/runtime: mariadb
+        deployment: mariadb
     spec:
       volumes:
         - name: mariadb-data
