@@ -9,7 +9,7 @@ metadata:
     app.kubernetes.io/name: moodle
     app.kubernetes.io/part-of: moodle
 spec:
-  host: moodle-mpizarro-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com
+  host: ${EXTERNAL_URL}
   to:
     kind: Service
     name: moodle

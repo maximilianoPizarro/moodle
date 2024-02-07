@@ -135,6 +135,7 @@ spec:
 apiVersion: tekton.dev/v1
 kind: Pipeline
 metadata:
+  name: moodle
   labels:
     app.kubernetes.io/instance: moodle
     app.kubernetes.io/name: moodle
@@ -142,7 +143,6 @@ metadata:
     pipeline.openshift.io/runtime: php74
     pipeline.openshift.io/runtime-version: php74
     pipeline.openshift.io/type: kubernetes
-  name: moodle
 spec:
   params:
     - default: moodle
@@ -154,7 +154,7 @@ spec:
     - default: MOODLE_311_STABLE
       name: GIT_REVISION
       type: string
-    - default: 'image-registry.openshift-image-registry.svc:5000/mpizarro-dev/moodle'
+    - default: 'image-registry.openshift-image-registry.svc:5000/mpizarro-dev/moodle-311'
       name: IMAGE_NAME
       type: string
     - default: .
@@ -286,12 +286,47 @@ spec:
         - name: VERSION
           value: latest
       runAfter:
-        - fetch-moodle-gitops
+        - yq
       taskRef:
         kind: ClusterTask
         name: openshift-client
       workspaces:
         - name: manifest-dir
+          workspace: workspace
+    - name: yq
+      params:
+        - name: SCRIPT
+          value: >-
+            echo "patch image"
+
+            yq e -i
+            '.spec.template.spec.containers[0].image="$(params.IMAGE_NAME)"'
+            gitops/overlay/develop/deployment-patches.yaml
+
+            cat gitops/overlay/develop/deployment-patches.yaml
+
+
+            echo "patch host"
+
+            yq e -i
+            '.spec.template.spec.containers[0].image="$(params.EXTERNAL_URL)"'
+            gitops/overlay/develop/route.yaml
+
+            cat gitops/overlay/develop/route.yaml
+        - name: image
+          value: >-
+            docker.io/mikefarah/yq:4.27.5@sha256:2be3626ed633fbe1fc33ee9343a1256a6be53334412b2251b9a859f8c145bb53
+        - name: files
+          value: []
+        - name: expression
+          value: ''
+      runAfter:
+        - fetch-moodle-gitops
+      taskRef:
+        kind: Task
+        name: yq
+      workspaces:
+        - name: source
           workspace: workspace
   workspaces:
     - name: workspace
