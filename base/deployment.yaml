@@ -15,7 +15,7 @@ metadata:
     app.kubernetes.io/part-of: moodle
     app.openshift.io/runtime: php
 spec:
-  replicas: 0
+  replicas: 1
   selector:
     matchLabels:
       app: moodle
