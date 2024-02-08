@@ -80,7 +80,8 @@ spec:
     spec:
       volumes:
         - name: mariadb-data
-          emptyDir: {}
+          persistentVolumeClaim:
+            claimName: mariadb-data
       containers:
         - resources:
             limits:

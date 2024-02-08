@@ -17,7 +17,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: posgre
+  name: mariadb-data
   labels:
     app.kubernetes.io/instance: moodle
     app.kubernetes.io/name: moodle
