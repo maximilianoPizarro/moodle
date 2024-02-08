@@ -9,7 +9,7 @@
 <a href="https://www.linkedin.com/in/maximiliano-gregorio-pizarro-consultor-it"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="linkedin">     
 </p>
 
-El propósito de este proyecto consiste en autogenerar los objetos kubernetes en base al codigo fuente del repositorio oficial [moodle](https://github.com/moodle/moodle) por medio de pipelines [Tekton](https://tekton.dev/) para el despliegue sobre las plataformas de contenedores [Kubernetes](https://kubernetes.io/) que cuenten con el Operator Instalado.
+El propósito de este proyecto consiste en autogenerar los objetos kubernetes en base al codigo fuente del repositorio oficial [moodle](https://github.com/moodle/moodle) por medio de un Pipeline [Tekton](https://tekton.dev/) para el despliegue sobre las plataformas de contenedores [Kubernetes](https://kubernetes.io/) que cuenten con el Operator Instalado.
 
 Para la construcción de la imagen del contenedor de moodle se utiliza la imagen oficial de RHEL8 del catálogo de Red Hat para [php-74](https://catalog.redhat.com/software/containers/rhel8/php-74/5f5211e39df2542e4756afd1?architecture=amd64&image=65952d8538d591f19afa95ed5952d8538d591f19afa95ed) con el agregado de la extensión php-zip requerida para la instalación de moodle. 
 
@@ -25,7 +25,7 @@ Se verifico el funcionamiento en [Sandbox RedHat OpenShift Dedicated](https://de
 
 ## Instalación Pipeline Tekton en OpenShift
 
-0. Ingresar a tu Sandbox y abrir una terminal web desde la consola de openshift seleccionando en el namespace asignado y ejecutar el siguiente comando para la creación del pipeline tekton
+0. Ingresar a tu Sandbox y abrir una terminal web desde la consola de openshift seleccionando en el namespace asignado y ejecutar el siguiente comando para la creación del Pipeline Tekton
 
 ```bash
 oc apply -f https://raw.githubusercontent.com/maximilianoPizarro/moodle/master/pipeline.yaml
@@ -40,7 +40,7 @@ task.tekton.dev/s2i-php-74 configured
 pipeline.tekton.dev/moodle configured
 ```
 
-## Ejecución pipeline Tekton
+## Ejecución Pipeline Tekton
 
 1. Desde la sección de Pipelines actualizar Parameters con los siguientes parametros con el valor de <NAMESPACE> correspondiente
 
@@ -63,13 +63,13 @@ VERSION=maximilianopizarro5-dev/php-74
 
 NOTA: Puede modificar los parametros desde el objeto moodle dentro del archivo pipeline.yaml como alternativa o desde el formulario de ejecución.
 
-2. Desde Pipeline builder instalar y agregar la tasks yq. Importante: no guardar el cambio en pipeline, seleccionar cancelar para que no se actualice el pipeline con yq vacio.
+2. Desde Pipeline builder instalar y agregar la tasks yq. Importante: no guardar el cambio en Pipeline, seleccionar cancelar para que no se actualice el Pipeline con yq vacio.
 
 <p align="left">
   <img src="https://github.com/maximilianoPizarro/botpress-server-v12/blob/master/examples/image/Captura3.PNG?raw=true" width="684" title="Run On Openshift">
 </p>  
 
-3. Desde la seccion de pipeline seleccionar moodle y ejecutar pipeline con el workspace "moodle-workspace" seleccionado.
+3. Desde la seccion de Pipeline seleccionar moodle y ejecutar Pipeline con el workspace "moodle-workspace" seleccionado.
 
 <p align="left">
   <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/workspace.PNG?raw=true" width="684" title="workspace">
