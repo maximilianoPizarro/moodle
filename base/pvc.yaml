@@ -2,6 +2,9 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: moodle-data
+  labels:
+    app.kubernetes.io/instance: moodle
+    app.kubernetes.io/name: moodle  
 spec:
   accessModes:
     - ReadWriteOnce
@@ -14,6 +17,9 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: posgre
+  labels:
+    app.kubernetes.io/instance: moodle
+    app.kubernetes.io/name: moodle  
 spec:
   accessModes:
     - ReadWriteOnce

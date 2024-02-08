@@ -2,6 +2,9 @@ kind: ImageStream
 apiVersion: image.openshift.io/v1
 metadata:
   name: moodle
+  labels:
+    app.kubernetes.io/instance: moodle
+    app.kubernetes.io/name: moodle  
 spec:
   lookupPolicy:
     local: false
@@ -10,6 +13,9 @@ kind: ImageStream
 apiVersion: image.openshift.io/v1
 metadata:
   name: php-74
+  labels:
+    app.kubernetes.io/instance: moodle
+    app.kubernetes.io/name: moodle  
 spec:
   lookupPolicy:
     local: false
