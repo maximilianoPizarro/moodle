@@ -42,7 +42,7 @@ pipeline.tekton.dev/moodle configured
 
 ## Ejecución Pipeline Tekton
 
-1. Desde la sección de Pipelines actualizar Parameters con los siguientes parametros con el valor de <NAMESPACE> correspondiente
+1. Desde la sección de Pipelines actualizar Parameters con los valores de <NAMESPACE> correspondiente, tener en cuenta para el caso del dns el dominio base puede cambiar segun la región.
 
 ```bash
 IMAGE_NAME=image-registry.openshift-image-registry.svc:5000/<NAMESPACE>/moodle
@@ -63,20 +63,20 @@ VERSION=maximilianopizarro5-dev/php-74
 
 NOTA: Puede modificar los parametros desde el objeto moodle dentro del archivo pipeline.yaml como alternativa o desde el formulario de ejecución.
 
-2. Desde Pipeline builder instalar y agregar la tasks yq. Importante: no guardar el cambio en Pipeline, seleccionar cancelar para que no se actualice el Pipeline con yq vacio.
+2. Desde Pipeline builder instalar y agregar la tasks [yq](https://github.com/mikefarah/yq) disponible en el catálogo de Pipelines. Importante: no guardar el cambio en Pipeline, seleccionar cancelar para que no se actualice el Pipeline con yq vacio.
 
 <p align="left">
   <img src="https://github.com/maximilianoPizarro/botpress-server-v12/blob/master/examples/image/Captura3.PNG?raw=true" width="684" title="Run On Openshift">
 </p>  
 
-3. Desde la seccion de Pipeline seleccionar moodle y ejecutar Pipeline con el workspace "moodle-workspace" seleccionado.
+3. Desde la seccion de Pipeline seleccionar moodle y ejecutar Pipeline con el workspace "moodle-workspace" configurado.
 
 <p align="left">
   <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/workspace.PNG?raw=true" width="684" title="workspace">
   <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/pipelinerun.PNG?raw=true" width="684" title="piperun">  
 </p>  
 
-4. Luego de la ejecución con exito de la tasks oc-apply-manifest, modicar el objeto moodle-configuration con con los valores de <NAMESPACE> desde la seccion de ConfigMaps con la opcion 'Edit ConfigMap', aplicar restart-rollout al deployment de moodle.
+4. Luego de la ejecución con exito de la tasks 'oc-apply-manifest' , modicar el objeto moodle-configuration con los valores de <NAMESPACE> desde la seccion de ConfigMaps, la opcion 'Edit ConfigMap', aplicar restart-rollout al deployment de moodle y verificar que el pod escale a 1 réplica.
 
 ```bash
   $CFG->dbhost    = 'mariadb.<NAMESPACE>-dev.svc.cluster.local';
@@ -98,7 +98,7 @@ NOTA: Puede modificar los parametros desde el objeto moodle dentro del archivo p
   <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/install311.1.PNG?raw=true" width="684" title="Run On Openshift">
 </p>
 
-1. Vemos que comple los requerimientos minimos y seleccionamos continuar.
+1. Vemos que comple los requerimientos mínimos y seleccionamos continuar.
 
 <p align="left">
   <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/install311.PNG?raw=true" width="684" title="Run On Openshift">
