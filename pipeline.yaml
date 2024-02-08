@@ -135,6 +135,7 @@ spec:
 apiVersion: tekton.dev/v1
 kind: Pipeline
 metadata:
+  name: moodle
   labels:
     app.kubernetes.io/instance: moodle
     app.kubernetes.io/name: moodle
@@ -142,7 +143,6 @@ metadata:
     pipeline.openshift.io/runtime: php74
     pipeline.openshift.io/runtime-version: php74
     pipeline.openshift.io/type: kubernetes
-  name: moodle
 spec:
   params:
     - default: moodle
@@ -179,8 +179,7 @@ spec:
         - name: deleteExisting
           value: 'true'
       runAfter:
-        - yq-patch-deployment
-        - yq-patch-route
+        - build-php74-ubi
       taskRef:
         kind: ClusterTask
         name: git-clone
@@ -215,7 +214,7 @@ spec:
           value: []
       retries: 3
       runAfter:
-        - build-php74-ubi
+        - fetch-repository
       taskRef:
         kind: Task
         name: s2i-php-74
@@ -229,7 +228,6 @@ spec:
         - name: VERSION
           value: latest
       runAfter:
-        - fetch-repository
         - oc-apply-manifest
       taskRef:
         kind: ClusterTask
@@ -344,5 +342,3 @@ spec:
           workspace: workspace
   workspaces:
     - name: workspace
-      optional: false
-  finally: []
