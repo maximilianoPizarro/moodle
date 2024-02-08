@@ -8,9 +8,11 @@
 <img src="https://img.shields.io/badge/shell_script-%23121011.svg?style=for-the-badge&logo=gnu-bash&logoColor=white" alt="shell">  
 </p>
 
-El propósito de este proyecto consiste en generar los objetos kubernetes en base a la imagen del nodo del repositorio oficial [moodle](https://moodle.org) para el despliegue sobre las plataformas de contenedores por medio de pipelines Tekton.
+El propósito de este proyecto consiste en autogenerar los objetos kubernetes en base al codigo fuente del repositorio oficial [moodle](https://github.com/moodle/moodle) para el despliegue sobre las plataformas de contenedores por medio de pipelines Tekton.
 
-Se verifico el funcionamiento en [Sandbox RedHat OpenShift Dedicated](https://developers.redhat.com/developer-sandbox) (Openshift 4.14.1). 
+Para la construcción de la imagen del contenedor de moodle se utiliza la imagen oficial de RHEL8 del catálogo de Red Hat para php74 con el agregado de la extensión php-zip requerida para la instalación. 
+
+Se verifico el funcionamiento en [Sandbox RedHat OpenShift Dedicated](https://developers.redhat.com/developer-sandbox) (Openshift 4.14.1) a partir del release MOODLE_311_STABLE con una base de datos mariadb proporsionada por el catalogo de OpenShift. 
 
 <p align="left">
   <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/image311.PNG?raw=true" width="684" title="Run On Openshift">
@@ -28,26 +30,28 @@ Se verifico el funcionamiento en [Sandbox RedHat OpenShift Dedicated](https://de
 oc apply -f https://raw.githubusercontent.com/maximilianoPizarro/moodle/master/pipeline.yaml
 ```
 
+```bash
 Output:
 Welcome to the OpenShift Web Terminal. Type "help" for a list of installed CLI tools.
 bash-4.4 ~ $ oc apply -f https://raw.githubusercontent.com/maximilianoPizarro/moodle/master/pipeline.yaml
 persistentvolumeclaim/moodle-workspace created
 task.tekton.dev/s2i-php-74 configured
 pipeline.tekton.dev/moodle configured
+```
 
 ## Ejecución pipeline Tekton
 
 1. Desde la sección de Pipelines actualizar Parameters con los siguientes parametros con el valor de <NAMESPACE> correspondiente
 
 ```bash
-IMAGE_NAME=image-registry.openshift-image-registry.svc:5000/<NAMESPACE>/botpress-server
-EXTERNAL_URL=botpress-server-<NAMESPACE>.apps.sandbox-m2.ll9k.p1.openshiftapps.com
+IMAGE_NAME=image-registry.openshift-image-registry.svc:5000/<NAMESPACE>/moodle
+EXTERNAL_URL=moodle-<NAMESPACE>.apps.sandbox-m2.ll9k.p1.openshiftapps.com
 VERSION=<NAMESPACE>-dev/php-74
 ```
 
 Output:
-IMAGE_NAME=image-registry.openshift-image-registry.svc:5000/maximilianopizarro5-dev/botpress-server
-EXTERNAL_URL=botpress-server-maximilianopizarro5-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com
+IMAGE_NAME=image-registry.openshift-image-registry.svc:5000/maximilianopizarro5-dev/moodle
+EXTERNAL_URL=moodle-maximilianopizarro5-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com
 VERSION=maximilianopizarro5-dev/php-74
 
 <p align="left">
@@ -89,9 +93,34 @@ NOTA: Puede modificar los parametros desde el objeto moodle dentro del archivo p
 
 <p align="left">
   <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/install311.1.PNG?raw=true" width="684" title="Run On Openshift">
+</p>
+
+1. Vemos que comple los requerimientos minimos y seleccionamos continuar.
+
+<p align="left">
   <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/install311.PNG?raw=true" width="684" title="Run On Openshift">
+</p>
+
+2. Generamos la cuenta administrador principal del sitio.
+
+<p align="left">
   <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/install311.2.PNG?raw=true" width="684" title="Run On Openshift">
-  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/install311.3.PNG?raw=true" width="684" title="Run On Openshift">    
+</p>
+
+3. Configuramos el nombre y la region.
+
+<p align="left">
+  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/install311.3.PNG?raw=true" width="684" title="Run On Openshift">
+</p>
+
+4. Vamos a recibir un correo de moodle con la confirmación del sitio, aceptamos los términos y condiciones.
+
+<p align="left">      
   <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/install311.4.PNG?raw=true" width="684" title="Run On Openshift">
+</p>
+
+5. Autenticamos con las credenciales del administrador principal y listo.
+
+<p align="left">  
   <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/install311.5.PNG?raw=true" width="684" title="Run On Openshift">
 </p>  
