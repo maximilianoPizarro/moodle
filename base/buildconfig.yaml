@@ -20,5 +20,7 @@ spec:
   postCommit: {}
   source:
     type: Dockerfile
-    dockerfile: "FROM registry.redhat.io/ubi8/php-74:latest\r\nUSER root\r\n\r\nENV DOCUMENT_ROOT=/opt/app-root/src\r\n\r\nRUN dnf install php-zip -y\r\n\r\nRUN chown 1001:0 $DOCUMENT_ROOT && chgrp -R 0 $DOCUMENT_ROOT && chmod -R g=u $DOCUMENT_ROOT\r\n\r\nUSER 1001"
+    dockerfile: "FROM registry.redhat.io/ubi8/php-74:latest\r\nUSER root\r\n\r\nENV DOCUMENT_ROOT=/opt/app-root/src\r\n\r\nRUN dnf install graphviz aspell ghostscript php-curl php-gd php-intl php-xml php-xmlrpc php-ldap php-zip php-soap php-mbstring -y\r\n\r\nRUN chown 1001:0 $DOCUMENT_ROOT && chgrp -R 0 $DOCUMENT_ROOT && chmod -R g=u $DOCUMENT_ROOT\r\n\r\nUSER 1001"
   runPolicy: Serial
+status:
+  lastVersion: 4
