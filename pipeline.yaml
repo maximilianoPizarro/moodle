@@ -2,6 +2,10 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: moodle-workspace
+  labels:  
+    app.kubernetes.io/instance: moodle
+    app.kubernetes.io/name: moodle
+    app.kubernetes.io/part-of: moodle    
 spec:
   accessModes:
     - ReadWriteOnce

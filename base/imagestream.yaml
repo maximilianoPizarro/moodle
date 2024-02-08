@@ -4,7 +4,8 @@ metadata:
   name: moodle
   labels:
     app.kubernetes.io/instance: moodle
-    app.kubernetes.io/name: moodle  
+    app.kubernetes.io/name: moodle
+    app.kubernetes.io/part-of: moodle      
 spec:
   lookupPolicy:
     local: false
@@ -15,7 +16,8 @@ metadata:
   name: php-74
   labels:
     app.kubernetes.io/instance: moodle
-    app.kubernetes.io/name: moodle  
+    app.kubernetes.io/name: moodle
+    app.kubernetes.io/part-of: moodle      
 spec:
   lookupPolicy:
     local: false
