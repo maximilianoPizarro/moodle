@@ -56,10 +56,10 @@ VERSION=maximilianopizarro5-dev/php-74
 
 NOTA: Puede modificar los parametros desde el objeto moodle dentro del archivo pipeline.yaml como alternativa o desde el formulario de ejecución.
 
-Desde Pipeline builder instalar y agregar la tasks yq. Importante: no guardar el cambio en pipeline, seleccionar cancelar para que no se actualice el pipeline con yq vacio.
+2. Desde Pipeline builder instalar y agregar la tasks yq. Importante: no guardar el cambio en pipeline, seleccionar cancelar para que no se actualice el pipeline con yq vacio.
 
 <p align="left">
-  <img src="https://github.com/maximilianoPizarro/botpress-server-v12/blob/master/examples/image/Captura4.PNG?raw=true" width="684" title="Run On Openshift">
+  <img src="https://github.com/maximilianoPizarro/botpress-server-v12/blob/master/examples/image/Captura3.PNG?raw=true" width="684" title="Run On Openshift">
 </p>  
 
 3. Desde la seccion de pipeline seleccionar moodle y ejecutar pipeline con el workspace "moodle-workspace" seleccionado.
@@ -77,8 +77,8 @@ Desde Pipeline builder instalar y agregar la tasks yq. Importante: no guardar el
 ```
 
 <p align="left">
-  <img src="https://github.com/maximilianoPizarro/botpress-server-v12/blob/master/examples/image/configphp.PNG?raw=true" width="684" title="configmap">
-  <img src="https://github.com/maximilianoPizarro/botpress-server-v12/blob/master/examples/image/restart-rollout.PNG?raw=true" width="684" title="rollout">  
+  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/configphp.PNG?raw=true" width="684" title="configmap">
+  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/restart-rollout.PNG?raw=true" width="684" title="rollout">  
 </p>
 
 
