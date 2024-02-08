@@ -10,7 +10,7 @@
 
 El propósito de este proyecto consiste en autogenerar los objetos kubernetes en base al codigo fuente del repositorio oficial [moodle](https://github.com/moodle/moodle) para el despliegue sobre las plataformas de contenedores por medio de pipelines Tekton.
 
-Para la construcción de la imagen del contenedor de moodle se utiliza la imagen oficial de RHEL8 del catálogo de Red Hat para php74 con el agregado de la extensión php-zip requerida para la instalación. 
+Para la construcción de la imagen del contenedor de moodle se utiliza la imagen oficial de RHEL8 del catálogo de Red Hat para [php-74](https://catalog.redhat.com/software/containers/rhel8/php-74/5f5211e39df2542e4756afd1?architecture=amd64&image=65952d8538d591f19afa95ed5952d8538d591f19afa95ed) con el agregado de la extensión php-zip requerida para la instalación de moodle. 
 
 Se verifico el funcionamiento en [Sandbox RedHat OpenShift Dedicated](https://developers.redhat.com/developer-sandbox) (Openshift 4.14.1) a partir del release MOODLE_311_STABLE con una base de datos mariadb proporsionada por el catalogo de OpenShift. 
 
