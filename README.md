@@ -49,10 +49,12 @@ EXTERNAL_URL=moodle-<NAMESPACE>.apps.sandbox-m2.ll9k.p1.openshiftapps.com
 VERSION=<NAMESPACE>-dev/php-74
 ```
 
+```bash
 Output:
 IMAGE_NAME=image-registry.openshift-image-registry.svc:5000/maximilianopizarro5-dev/moodle
 EXTERNAL_URL=moodle-maximilianopizarro5-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com
 VERSION=maximilianopizarro5-dev/php-74
+```
 
 <p align="left">
   <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/parameters.PNG?raw=true" width="684" title="parameters">
