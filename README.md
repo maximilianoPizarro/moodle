@@ -51,7 +51,7 @@ EXTERNAL_URL=botpress-server-maximilianopizarro5-dev.apps.sandbox-m2.ll9k.p1.ope
 VERSION=maximilianopizarro5-dev/php-74
 
 <p align="left">
-  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/parameteres.PNG?raw=true" width="684" title="parameteres">
+  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/parameters.PNG?raw=true" width="684" title="parameters">
 </p>  
 
 NOTA: Puede modificar los parametros desde el objeto moodle dentro del archivo pipeline.yaml como alternativa o desde el formulario de ejecución.
