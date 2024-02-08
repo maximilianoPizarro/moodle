@@ -12,13 +12,13 @@ El propósito de este proyecto consiste en generar los objetos kubernetes en bas
 Se verifico el funcionamiento en [Sandbox RedHat OpenShift Dedicated](https://developers.redhat.com/developer-sandbox) (Openshift 4.14.1). 
 
 <p align="left">
-  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/tekton311.PNG?raw=true" width="684" title="Run On Openshift">
+  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/image311.PNG?raw=true" width="684" title="Run On Openshift">
 </p>  
 <p align="left">
-  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/pipelinerun.PNG?raw=true" width="684" title="Run On Openshift">
+  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/pipelinerun.PNG?raw=true" width="684" title="Run On Openshift">
 </p>  
 
-## Instalación
+## Instalación OpenShift
 
 0. Ingresar a tu Sandbox y abrir una terminal web desde la consola de openshift seleccionando en el namespace asignado y ejecutar el siguiente comando para la creación del pipeline tekton
 
@@ -35,5 +35,17 @@ pipeline.tekton.dev/moodle configured
 
 
 <p align="left">
-  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/topology311ocp.PNG?raw=true" width="684" title="Run On Openshift">
+  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/topology311ocp.PNG?raw=true" width="684" title="Run On Openshift">
+</p>  
+
+## Instalación Moodle
+
+
+<p align="left">
+  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/install311.1.PNG?raw=true" width="684" title="Run On Openshift">
+  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/install311.PNG?raw=true" width="684" title="Run On Openshift">
+  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/install311.2.PNG?raw=true" width="684" title="Run On Openshift">
+  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/install311.3.PNG?raw=true" width="684" title="Run On Openshift">    
+  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/install311.4.PNG?raw=true" width="684" title="Run On Openshift">
+  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/install311.5.PNG?raw=true" width="684" title="Run On Openshift">
 </p>  
