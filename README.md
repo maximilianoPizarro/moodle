@@ -14,7 +14,9 @@ Se verifico el funcionamiento en [Sandbox RedHat OpenShift Dedicated](https://de
 <p align="left">
   <img src="https://github.com/maximilianoPizarro/moodle/blob/main/tekton311.PNG?raw=true" width="684" title="Run On Openshift">
 </p>  
-
+<p align="left">
+  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/pipelinerun.PNG?raw=true" width="684" title="Run On Openshift">
+</p>  
 
 ## Instalación
 
