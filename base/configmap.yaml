@@ -14,7 +14,7 @@ data:
 
       $CFG->dbtype    = 'mariadb';      // 'pgsql', 'mariadb', 'mysqli', 'sqlsrv' or 'oci'
       $CFG->dblibrary = 'native';     // 'native' only at the moment
-      $CFG->dbhost    = 'mariadb.mpizarro-dev.svc.cluster.local';  // eg 'localhost' or 'db.isp.com' or IP
+      $CFG->dbhost    = 'mariadb.maximilianopizarro5-dev.svc.cluster.local';  // eg 'localhost' or 'db.isp.com' or IP
       $CFG->dbname    = 'moodledb';     // database name, eg moodle
       $CFG->dbuser    = 'moodle';   // your database username
       $CFG->dbpass    = 'moodle';   // your database password
@@ -41,7 +41,7 @@ data:
       );
 
 
-      $CFG->wwwroot   = 'https://moodle-mpizarro-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com';
+      $CFG->wwwroot   = 'https://moodle-maximilianopizarro5-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com';
       $CFG->sslproxy = 1;
 
 

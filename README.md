@@ -15,11 +15,12 @@ Se verifico el funcionamiento en [Sandbox RedHat OpenShift Dedicated](https://de
 <p align="left">
   <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/image311.PNG?raw=true" width="684" title="Run On Openshift">
 </p>  
-<p align="left">
-  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/pipelinerun.PNG?raw=true" width="684" title="Run On Openshift">
-</p>  
 
-## Instalación OpenShift
+<p align="left">
+  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/topology311ocp.PNG?raw=true" width="684" title="Run On Openshift">
+</p>    
+
+## Instalación Pipeline Tekton en OpenShift
 
 0. Ingresar a tu Sandbox y abrir una terminal web desde la consola de openshift seleccionando en el namespace asignado y ejecutar el siguiente comando para la creación del pipeline tekton
 
@@ -34,13 +35,57 @@ persistentvolumeclaim/moodle-workspace created
 task.tekton.dev/s2i-php-74 configured
 pipeline.tekton.dev/moodle configured
 
+## Ejecución pipeline Tekton
+
+1. Desde la sección de Pipelines actualizar Parameters con los siguientes parametros con el valor de <NAMESPACE> correspondiente
+
+```bash
+IMAGE_NAME=image-registry.openshift-image-registry.svc:5000/<NAMESPACE>/botpress-server
+EXTERNAL_URL=botpress-server-<NAMESPACE>.apps.sandbox-m2.ll9k.p1.openshiftapps.com
+VERSION=<NAMESPACE>-dev/php-74
+```
+
+Output:
+IMAGE_NAME=image-registry.openshift-image-registry.svc:5000/maximilianopizarro5-dev/botpress-server
+EXTERNAL_URL=botpress-server-maximilianopizarro5-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com
+VERSION=maximilianopizarro5-dev/php-74
 
 <p align="left">
-  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/topology311ocp.PNG?raw=true" width="684" title="Run On Openshift">
+  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/parameteres.PNG?raw=true" width="684" title="parameteres">
 </p>  
+
+NOTA: Puede modificar los parametros desde el objeto moodle dentro del archivo pipeline.yaml como alternativa o desde el formulario de ejecución.
+
+Desde Pipeline builder instalar y agregar la tasks yq. Importante: no guardar el cambio en pipeline, seleccionar cancelar para que no se actualice el pipeline con yq vacio.
+
+<p align="left">
+  <img src="https://github.com/maximilianoPizarro/botpress-server-v12/blob/master/examples/image/Captura4.PNG?raw=true" width="684" title="Run On Openshift">
+</p>  
+
+3. Desde la seccion de pipeline seleccionar moodle y ejecutar pipeline con el workspace "moodle-workspace" seleccionado.
+
+<p align="left">
+  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/workspace.PNG?raw=true" width="684" title="workspace">
+  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/pipelinerun.PNG?raw=true" width="684" title="piperun">  
+</p>  
+
+4. Luego de la ejecución con exito de la tasks oc-apply-manifest, modicar el objeto moodle-configuration con con los valores de <NAMESPACE> desde la seccion de ConfigMaps con la opcion 'Edit ConfigMap', aplicar restart-rollout al deployment de moodle.
+
+```bash
+  $CFG->dbhost    = 'mariadb.<NAMESPACE>-dev.svc.cluster.local';
+  $CFG->wwwroot   = 'https://moodle-<NAMESPACE>-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com';
+```
+
+<p align="left">
+  <img src="https://github.com/maximilianoPizarro/botpress-server-v12/blob/master/examples/image/configphp.PNG?raw=true" width="684" title="configmap">
+  <img src="https://github.com/maximilianoPizarro/botpress-server-v12/blob/master/examples/image/restart-rollout.PNG?raw=true" width="684" title="rollout">  
+</p>
+
+
 
 ## Instalación Moodle
 
+0. Desde la vista Topology seleccionar la aplicación moodle en donde encontraremos al dns del sitio.
 
 <p align="left">
   <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/install311.1.PNG?raw=true" width="684" title="Run On Openshift">
