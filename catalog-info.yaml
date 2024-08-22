@@ -10,6 +10,15 @@ metadata:
     backstage.io/kubernetes-id: moodle
     janus-idp.io/tekton : moodle
     backstage.io/kubernetes-label-selector: 'app=moodle'
+  links:
+    - title: Documentation
+      url: https://github.com/maximilianoPizarro/moodle/blob/main/README.md 
+    - url: https://workspaces.openshift.com/#https://github.com/maximilianopizarro/moodle
+      title: OpenShift Dev Spaces (VS Code)
+      icon: web
+  tags:
+    - moodle311
+    - dev      
 spec:
   type: service
   lifecycle: experimental
