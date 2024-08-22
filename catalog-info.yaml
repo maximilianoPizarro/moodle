@@ -1,0 +1,16 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: "moodle"
+  description: "Moodle for Red Hat Developer Hub"
+  annotations:
+    github.com/project-slug: maximilianopizarro/moodle
+    backstage.io/techdocs-ref: dir:.
+    backstage.io/kubernetes-namespace: mpizarro-dev
+    backstage.io/kubernetes-id: moodle
+    janus-idp.io/tekton : moodle
+    backstage.io/kubernetes-label-selector: 'app=moodle'
+spec:
+  type: service
+  lifecycle: experimental
+  owner: "group:default/maximilianopizarro"
