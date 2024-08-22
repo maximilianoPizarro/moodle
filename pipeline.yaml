@@ -5,7 +5,8 @@ metadata:
   labels:  
     app.kubernetes.io/instance: moodle
     app.kubernetes.io/name: moodle
-    app.kubernetes.io/part-of: moodle    
+    app.kubernetes.io/part-of: moodle
+    app: moodle
 spec:
   accessModes:
     - ReadWriteOnce
@@ -143,6 +144,7 @@ metadata:
   labels:
     app.kubernetes.io/instance: moodle
     app.kubernetes.io/name: moodle
+    app: moodle
     operator.tekton.dev/operand-name: openshift-pipelines-addons
     pipeline.openshift.io/runtime: php74
     pipeline.openshift.io/runtime-version: php74
