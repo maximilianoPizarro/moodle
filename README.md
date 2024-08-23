@@ -10,7 +10,7 @@
 </p>
 
 <p align="left">
-  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/cover.PNG?raw=true" width="684" title="Run On Openshift">
+  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/cover.PNG?raw=true" width="900" title="Run On Openshift">
 </p>  
 
 El propósito de este proyecto consiste en autogenerar los objetos kubernetes y deployar en un ambiente de Dev, en base al codigo fuente del repositorio oficial [Moodle](https://github.com/moodle/moodle) por medio de un Pipeline [Tekton](https://tekton.dev/) para el despliegue sobre las plataformas de contenedores [Kubernetes](https://kubernetes.io/) que cuenten con el Operador de Pipelines Instalado.
@@ -20,11 +20,11 @@ Para la construcción de la imagen del contenedor de moodle se utiliza la imagen
 Se verifico el funcionamiento en [Sandbox RedHat OpenShift Dedicated](https://developers.redhat.com/developer-sandbox) (Openshift 4.14.1) a partir del release [MOODLE_311_STABLE](https://github.com/moodle/moodle/tree/MOODLE_311_STABLE) con una base de datos mariadb proporsionada por el catalogo de OpenShift. 
 
 <p align="left">
-  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/image311.PNG?raw=true" width="684" title="Run On Openshift">
+  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/image311.PNG?raw=true" width="900" title="Run On Openshift">
 </p>  
 
 <p align="left">
-  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/topology311ocp.PNG?raw=true" width="684" title="Run On Openshift">
+  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/topology311ocp.PNG?raw=true" width="900" title="Run On Openshift">
 </p>    
 
 ## Instalación Pipeline Tekton en OpenShift
@@ -62,7 +62,7 @@ VERSION=maximilianopizarro5-dev/php-74
 ```
 
 <p align="left">
-  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/parameters.PNG?raw=true" width="684" title="parameters">
+  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/parameters.PNG?raw=true" width="900" title="parameters">
 </p>  
 
 NOTA: Puede modificar los parametros desde el objeto moodle dentro del archivo pipeline.yaml como alternativa o desde el formulario de ejecución.
@@ -70,14 +70,14 @@ NOTA: Puede modificar los parametros desde el objeto moodle dentro del archivo p
 2. Desde Pipeline builder instalar y agregar la tasks [yq](https://github.com/mikefarah/yq) disponible en el catálogo de Pipelines. Importante: no guardar el cambio en Pipeline, seleccionar cancelar para que no se actualice el Pipeline con yq vacio.
 
 <p align="left">
-  <img src="https://github.com/maximilianoPizarro/botpress-server-v12/blob/master/examples/image/Captura3.PNG?raw=true" width="684" title="Run On Openshift">
+  <img src="https://github.com/maximilianoPizarro/botpress-server-v12/blob/master/examples/image/Captura3.PNG?raw=true" width="900" title="Run On Openshift">
 </p>  
 
 3. Desde la seccion de Pipeline seleccionar moodle y ejecutar Pipeline con el workspace "moodle-workspace" configurado.
 
 <p align="left">
-  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/workspace.PNG?raw=true" width="684" title="workspace">
-  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/pipelinerun.PNG?raw=true" width="684" title="piperun">  
+  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/workspace.PNG?raw=true" width="900" title="workspace">
+  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/pipelinerun.PNG?raw=true" width="900" title="piperun">  
 </p>  
 
 4. Luego de la ejecución con exito de la tasks 'oc-apply-manifest' , modicar el objeto moodle-configuration con los valores de <NAMESPACE> desde la seccion de ConfigMaps, la opcion 'Edit ConfigMap', aplicar restart-rollout al deployment de moodle y verificar que el pod escale a 1 réplica.
@@ -88,8 +88,8 @@ NOTA: Puede modificar los parametros desde el objeto moodle dentro del archivo p
 ```
 
 <p align="left">
-  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/configphp.PNG?raw=true" width="684" title="configmap">
-  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/restart-rollout.PNG?raw=true" width="684" title="rollout">  
+  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/configphp.PNG?raw=true" width="900" title="configmap">
+  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/restart-rollout.PNG?raw=true" width="900" title="rollout">  
 </p>
 
 
@@ -99,35 +99,35 @@ NOTA: Puede modificar los parametros desde el objeto moodle dentro del archivo p
 0. Desde la vista Topology seleccionar la aplicación moodle en donde encontraremos al dns del sitio.
 
 <p align="left">
-  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/install311.1.PNG?raw=true" width="684" title="Run On Openshift">
+  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/install311.1.PNG?raw=true" width="900" title="Run On Openshift">
 </p>
 
 1. Vemos que comple los requerimientos mínimos y seleccionamos continuar.
 
 <p align="left">
-  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/install311.PNG?raw=true" width="684" title="Run On Openshift">
+  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/install311.PNG?raw=true" width="900" title="Run On Openshift">
 </p>
 
 2. Generamos la cuenta administrador principal del sitio.
 
 <p align="left">
-  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/install311.2.PNG?raw=true" width="684" title="Run On Openshift">
+  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/install311.2.PNG?raw=true" width="900" title="Run On Openshift">
 </p>
 
 3. Configuramos el nombre y la region.
 
 <p align="left">
-  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/install311.3.PNG?raw=true" width="684" title="Run On Openshift">
+  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/install311.3.PNG?raw=true" width="900" title="Run On Openshift">
 </p>
 
 4. Vamos a recibir un correo de moodle con la confirmación del sitio, aceptamos los términos y condiciones.
 
 <p align="left">      
-  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/install311.4.PNG?raw=true" width="684" title="Run On Openshift">
+  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/install311.4.PNG?raw=true" width="900" title="Run On Openshift">
 </p>
 
 5. Autenticamos con las credenciales del administrador principal y listo.
 
 <p align="left">  
-  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/install311.5.PNG?raw=true" width="684" title="Run On Openshift">
+  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/install311.5.PNG?raw=true" width="900" title="Run On Openshift">
 </p>  
