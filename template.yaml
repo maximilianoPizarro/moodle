@@ -1,4 +1,3 @@
-
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
@@ -23,9 +22,8 @@ spec:
         - version
         - externalUrl
         - orgName
-        - codeRepoName
-        - gitopsRepoName
         - namespace
+        - owner
       properties:
         appName:
           title: Nombre de la Aplicación
@@ -67,26 +65,11 @@ spec:
           type: string
           description: Nombre de la organización para los repositorios
           default: maximilianoPizarro
-        codeRepoName:
-          title: Nombre del Repositorio de Código
-          type: string
-          description: Nombre del repositorio de código de salida
-          default: code-${{ parameters.appName }}
-        gitopsRepoName:
-          title: Nombre del Repositorio GitOps
-          type: string
-          description: Nombre del repositorio GitOps de salida
-          default: gitops-${{ parameters.appName }}
         namespace:
           title: Namespace Kubernetes
           type: string
           description: Namespace donde se ejecutará el pipeline
           default: default
-        owner:
-          title: Propietario
-          type: string
-          description: Nombre del propietario del repositorio
-          default: admin
     - title: Choose a location
       required:
         - repoUrl
@@ -97,7 +80,7 @@ spec:
           ui:field: RepoUrlPicker
           ui:options:
             allowedHosts:
-              - github.com                    
+              - github.com
   steps:
     - id: create-gitops-repo
       name: Crear Repositorio GitOps
@@ -107,6 +90,10 @@ spec:
           - github.com      
         repoUrl: ${{ parameters.repoUrl }}
         sourcePath: https://github.com/maximilianoPizarro/moodle/tree/main
+        owner: ${{ parameters.owner }}
+        visibility: public
+        defaultBranch: main
+        allowExistingRepo: true        
     - id: tekton-pipeline
       name: Configurar Tekton Pipeline
       action: tekton:apply
@@ -125,12 +112,12 @@ spec:
       name: Register
       action: catalog:register
       input:
-        repoContentsUrl: ${{ steps.publish.output.repoContentsUrl }}
+        repoContentsUrl: ${{ steps.create-gitops-repo.output.repoContentsUrl }}
         catalogInfoPath: "/catalog-info.yaml"
   output:
     links:
       - title: Repository
-        url: ${{ steps.publish.output.remoteUrl }}
+        url: ${{ steps.create-gitops-repo.output.remoteUrl }}
       - title: Open in catalog
         icon: catalog
         entityRef: ${{ steps.register.output.entityRef }}
