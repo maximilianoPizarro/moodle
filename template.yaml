@@ -86,12 +86,6 @@ spec:
       action: fetch:template
       input:
         url: ./
-        values:
-          component_id: ${{ parameters.appName }}
-          description:  ${{ parameters.description }}
-          destination: ${{ parameters.repoUrl | parseRepoUrl }}
-          owner: ${{ parameters.owner }}
-          namespace: ${{ parameters.namespace }}   
     - id: create-gitops-repo
       name: Crear Repositorio GitOps
       action: publish:github

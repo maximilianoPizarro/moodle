@@ -1,10 +1,8 @@
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: ${{values.component_id | dump}}
-  {%- if values.description %}
-  description: ${{values.description | dump}}
-  {%- endif %}
+  name: "moodle"
+  description: "Moodle for Red Hat Developer Hub"
   annotations:
     github.com/project-slug: maximilianopizarro/moodle
     backstage.io/techdocs-ref: dir:.
@@ -20,7 +18,7 @@ metadata:
       icon: web
     - url: https://moodle-maximilianopizar-2-dev.apps.rm2.thpm.p1.openshiftapps.com
       title: Moodle Url
-      icon: maximilianopizar-2-dev.
+      icon: web
   tags:
     - template
     - tekton
@@ -29,4 +27,4 @@ metadata:
 spec:
   type: webside
   lifecycle: experimental
-  owner: ${{values.owner | dump}}
+  owner: "group:default/maximilianopizarro"
