@@ -1,0 +1,119 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: moodle-template
+  title: Moodle Software Template
+  description: Plantilla para configurar un pipeline de Tekton para Moodle
+  annotations:
+    backstage.io/techdocs-ref: dir:.
+    backstage.io/kubernetes-id: moodle
+    backstage.io/tekton-enabled: "true"
+spec:
+  owner: {{ parameters.owner }}
+  type: service
+  parameters:
+    - title: Información del Pipeline
+      required:
+        - appName
+        - gitRepo
+        - gitRevision
+        - imageName
+        - pathContext
+        - version
+        - externalUrl
+        - orgName
+        - codeRepoName
+        - gitopsRepoName
+        - namespace
+      properties:
+        appName:
+          title: Nombre de la Aplicación
+          type: string
+          description: Nombre de la aplicación Moodle
+          default: "moodle"
+        gitRepo:
+          title: Repositorio Git
+          type: string
+          description: URL del repositorio de código fuente
+          default: "https://github.com/moodle/moodle"
+        gitRevision:
+          title: Revisión Git
+          type: string
+          description: Rama o tag de Git a utilizar
+          default: "MOODLE_311_STABLE"
+        imageName:
+          title: Nombre de la Imagen
+          type: string
+          description: Ruta de la imagen en el registro
+          default: "image-registry.openshift-image-registry.svc:5000/maximilianopizar-2-dev/moodle"
+        pathContext:
+          title: Contexto de Build
+          type: string
+          description: Ruta del contexto para la construcción de la imagen
+          default: "."
+        version:
+          title: Versión
+          type: string
+          description: Versión de PHP a utilizar
+          default: "maximilianopizar-2-dev/php-74"
+        externalUrl:
+          title: URL Externa
+          type: string
+          description: URL externa para acceder a la aplicación Moodle
+          default: "moodle-maximilianopizar-2-dev.apps.rm2.thpm.p1.openshiftapps.com"
+        orgName:
+          title: Nombre de la Organización GitHub
+          type: string
+          description: Nombre de la organización para los repositorios
+          default: "maximilianoPizarro"
+        codeRepoName:
+          title: Nombre del Repositorio de Código
+          type: string
+          description: Nombre del repositorio de código de salida
+          default: "code-{{ parameters.appName }}"
+        gitopsRepoName:
+          title: Nombre del Repositorio GitOps
+          type: string
+          description: Nombre del repositorio GitOps de salida
+          default: "gitops-{{ parameters.appName }}"
+        namespace:
+          title: Namespace Kubernetes
+          type: string
+          description: Namespace donde se ejecutará el pipeline
+          default: "default"
+  steps:
+    - id: create-gitops-repo
+      name: Crear Repositorio GitOps
+      action: publish:github
+      input:
+        repoUrl: github.com/{{ parameters.orgName }}/{{ parameters.gitopsRepoName }}
+        owner: {{ parameters.owner }}
+        sourcePath: https://github.com/maximilianoPizarro/moodle/tree/main
+    - id: create-code-repo
+      name: Crear Repositorio de Código
+      action: publish:github
+      input:
+        repoUrl: github.com/{{ parameters.orgName }}/{{ parameters.codeRepoName }}
+        owner: {{ parameters.owner }}
+        sourcePath: {{ parameters.gitRepo }}
+        branch: {{ parameters.gitRevision }}
+    - id: tekton-pipeline
+      name: Configurar Tekton Pipeline
+      action: tekton:apply
+      input:
+        namespace: {{ parameters.namespace }}
+        pipelineRef: moodle
+        parameters:
+          APP_NAME: {{ parameters.appName }}
+          GIT_REPO: {{ parameters.gitRepo }}
+          GIT_REVISION: {{ parameters.gitRevision }}
+          IMAGE_NAME: {{ parameters.imageName }}
+          PATH_CONTEXT: {{ parameters.pathContext }}
+          VERSION: {{ parameters.version }}
+          EXTERNAL_URL: {{ parameters.externalUrl }}
+  output:
+    links:
+      - title: Repositorio GitOps
+        url: https://github.com/{{ parameters.orgName }}/{{ parameters.gitopsRepoName }}
+      - title: Repositorio de Código
+        url: https://github.com/{{ parameters.orgName }}/{{ parameters.codeRepoName }}
