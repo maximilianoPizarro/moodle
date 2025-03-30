@@ -1,22 +1,22 @@
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: "moodle"
+  name: ${{values.component_id | 'moodle'}}
   description: "Moodle for Red Hat Developer Hub"
   annotations:
-    github.com/project-slug: maximilianopizarro/moodle
+    github.com/project-slug: ${{values.destination.owner + "/" + values.destination.repo}}
     backstage.io/techdocs-ref: dir:.
     backstage.io/kubernetes-namespace: maximilianopizar-2-dev
-    backstage.io/kubernetes-id: moodle
-    janus-idp.io/tekton : moodle
-    backstage.io/kubernetes-label-selector: 'app=moodle'
+    backstage.io/kubernetes-id: ${{values.component_id | 'moodle'}}
+    janus-idp.io/tekton : ${{values.component_id | 'moodle'}}
+    backstage.io/kubernetes-label-selector:  app=${{values.component_id | 'moodle'}}
   links:
     - title: Documentation
-      url: https://github.com/maximilianoPizarro/moodle/blob/main/README.md 
-    - url: https://workspaces.openshift.com/#https://github.com/maximilianopizarro/moodle
+      url: ${{values.destination.owner + "/" + values.destination.repo}}/blob/main/README.md 
+    - url: https://workspaces.openshift.com/#${{values.destination.owner + "/" + values.destination.repo}}/moodle
       title: OpenShift Dev Spaces (VS Code)
       icon: web
-    - url: https://moodle-maximilianopizar-2-dev.apps.rm2.thpm.p1.openshiftapps.com
+    - url: https://${{values.component_id | 'moodle'}}-maximilianopizar-2-dev.apps.rm2.thpm.p1.openshiftapps.com
       title: Moodle Url
       icon: web
   tags:
@@ -27,4 +27,4 @@ metadata:
 spec:
   type: webside
   lifecycle: experimental
-  owner: "group:default/maximilianopizarro"
+  owner: ${{values.owner | dump}}

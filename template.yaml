@@ -85,7 +85,15 @@ spec:
       name: Fetch Skeleton + Template
       action: fetch:template
       input:
-        url: ./  
+        url: ./
+        values:
+          component_id: ${{ parameters.appName }}
+          description:  ${{ parameters.description }}
+          destination: ${{ parameters.repoUrl | parseRepoUrl }}
+          owner: ${{ parameters.owner }}
+          # cluster: {{ cluster_subdomain }}
+          host: ${{ parameters.repo.host }}
+          destination_own: ${{ parameters.repo.owner }}          
     - id: create-gitops-repo
       name: Crear Repositorio GitOps
       action: publish:github
@@ -93,20 +101,6 @@ spec:
         allowedHosts:
           - github.com      
         repoUrl: ${{ parameters.repoUrl }}
-    - id: tekton-pipeline
-      name: Configurar Tekton Pipeline
-      action: tekton:apply
-      input:
-        namespace: ${{ parameters.namespace }}
-        pipelineRef: moodle
-        parameters:
-          APP_NAME: ${{ parameters.appName }}
-          GIT_REPO: ${{ parameters.gitRepo }}
-          GIT_REVISION: ${{ parameters.gitRevision }}
-          IMAGE_NAME: ${{ parameters.imageName }}
-          PATH_CONTEXT: ${{ parameters.pathContext }}
-          VERSION: ${{ parameters.version }}
-          EXTERNAL_URL: ${{ parameters.externalUrl }}
     - id: register
       name: Register
       action: catalog:register
