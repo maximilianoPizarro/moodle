@@ -28,7 +28,7 @@ spec:
           title: Nombre de la Aplicación
           type: string
           description: Nombre de la aplicación Moodle
-          default: moodle
+          default: moodle-demo
         gitRepo:
           title: Repositorio Git
           type: string
@@ -68,7 +68,7 @@ spec:
           title: Namespace Kubernetes
           type: string
           description: Namespace donde se ejecutará el pipeline
-          default: default
+          default: maximilianopizar-2-dev
     - title: Choose a location
       required:
         - repoUrl
@@ -93,12 +93,6 @@ spec:
         allowedHosts:
           - github.com      
         repoUrl: ${{ parameters.repoUrl }}
-    - id: register
-      name: Register
-      action: catalog:register
-      input:
-        repoContentsUrl: ${{ steps.create-gitops-repo.output.repoContentsUrl }}
-        catalogInfoPath: "/catalog-info.yaml"
   output:
     links:
       - title: Repository
