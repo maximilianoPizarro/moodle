@@ -95,7 +95,6 @@ spec:
         repoUrl: github.com/${{ parameters.orgName }}/${{ parameters.gitopsRepoName }}
         sourcePath: https://github.com/maximilianoPizarro/moodle/tree/main
         owner: ${{ parameters.owner }}
-        sourcePath: https://github.com/maximilianoPizarro/moodle/tree/main
         visibility: public # O "private" si quieres que el repo sea privado
         defaultBranch: main
         allowExistingRepo: true        
