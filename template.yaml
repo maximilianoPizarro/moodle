@@ -23,7 +23,6 @@ spec:
         - externalUrl
         - orgName
         - namespace
-        - owner
       properties:
         appName:
           title: Nombre de la Aplicación
