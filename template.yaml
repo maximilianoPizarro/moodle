@@ -86,13 +86,26 @@ spec:
           title: Propietario
           type: string
           description: Nombre del propietario del repositorio
-          default: admin          
+          default: admin
+    - title: Choose a location
+      required:
+        - repoUrl
+      properties:
+        repoUrl:
+          title: Repository Location
+          type: string
+          ui:field: RepoUrlPicker
+          ui:options:
+            allowedHosts:
+              - github.com                    
   steps:
     - id: create-gitops-repo
       name: Crear Repositorio GitOps
       action: publish:github
       input:
-        repoUrl: github.com/${{ parameters.orgName }}/${{ parameters.gitopsRepoName }}
+        allowedHosts:
+          - github.com      
+        repoUrl: github.com/${{ parameters.orgName }}/${{ parameters.gitopsRepoName }}.git
         sourcePath: https://github.com/maximilianoPizarro/moodle/tree/main
         owner: ${{ parameters.owner }}
         visibility: public # O "private" si quieres que el repo sea privado
@@ -102,7 +115,9 @@ spec:
       name: Crear Repositorio de Código
       action: publish:github
       input:
-        repoUrl: github.com/${{ parameters.orgName }}/${{ parameters.codeRepoName }}
+        allowedHosts:
+          - github.com            
+        repoUrl: github.com/${{ parameters.orgName }}/${{ parameters.codeRepoName }}.git
         sourcePath: ${{ parameters.gitRepo }}
         branch: ${{ parameters.gitRevision }}
         owner: ${{ parameters.owner }}        
