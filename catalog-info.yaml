@@ -16,10 +16,15 @@ metadata:
     - url: https://workspaces.openshift.com/#https://github.com/maximilianopizarro/moodle
       title: OpenShift Dev Spaces (VS Code)
       icon: web
+    - url: https://moodle-maximilianopizar-2-dev.apps.rm2.thpm.p1.openshiftapps.com
+      title: Moodle Url
+      icon: web
   tags:
-    - moodle311
+    - template
+    - tekton
+    - moodle
     - dev      
 spec:
-  type: service
+  type: webside
   lifecycle: experimental
   owner: "group:default/maximilianopizarro"

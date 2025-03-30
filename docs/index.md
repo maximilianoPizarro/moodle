@@ -44,10 +44,7 @@ VERSION=maximilianopizar-2-dev/php-74
 NOTA: Puede modificar los parametros desde el objeto moodle dentro del archivo pipeline.yaml como alternativa o desde el formulario de ejecución.
 
 2. Desde Pipeline builder instalar y agregar la tasks [yq](https://github.com/mikefarah/yq) disponible en el catálogo de Pipelines. Importante: no guardar el cambio en Pipeline, seleccionar cancelar para que no se actualice el Pipeline con yq vacio.
-
-<p align="left">
-  <img src="https://github.com/maximilianoPizarro/botpress-server-v12/blob/master/examples/image/Captura3.PNG?raw=true" width="900" title="Run On Openshift">
-</p>  
+ 
 
 3. Desde la seccion de Pipeline seleccionar moodle y ejecutar Pipeline con el workspace "moodle-workspace" configurado.
 
