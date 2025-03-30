@@ -6,12 +6,12 @@ metadata:
   description: ${{values.description | dump}}
   {%- endif %}
   annotations:
-    github.com/project-slug: ${{values.owner + "/" + values.destination | dump}}
+    github.com/project-slug: maximilianopizarro/moodle
     backstage.io/techdocs-ref: dir:.
-    backstage.io/kubernetes-namespace: ${{values.namespace | dump}}
-    backstage.io/kubernetes-id: ${{values.component_id | dump}}
-    janus-idp.io/tekton : ${{values.component_id | dump}}
-    backstage.io/kubernetes-label-selector: 'app=${{values.component_id | dump}}'
+    backstage.io/kubernetes-namespace: maximilianopizar-2-dev
+    backstage.io/kubernetes-id: moodle
+    janus-idp.io/tekton : moodle
+    backstage.io/kubernetes-label-selector: 'app=moodle'
   links:
     - title: Documentation
       url: https://github.com/maximilianoPizarro/moodle/blob/main/README.md 
