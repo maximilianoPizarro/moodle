@@ -1,11 +1,16 @@
+
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
   name: moodle-template
   title: Moodle Software Template
   description: Plantilla para configurar un pipeline de Tekton para Moodle
+  annotations:
+    backstage.io/techdocs-ref: dir:.
+    backstage.io/kubernetes-id: moodle
+    backstage.io/tekton-enabled: "true"
 spec:
-  owner: group:default/maximilianopizarro
+  owner: {{ parameters.owner }}
   type: service
   parameters:
     - title: Información del Pipeline
@@ -26,57 +31,62 @@ spec:
           title: Nombre de la Aplicación
           type: string
           description: Nombre de la aplicación Moodle
-          default: "moodle"
+          default: moodle
         gitRepo:
           title: Repositorio Git
           type: string
           description: URL del repositorio de código fuente
-          default: "https://github.com/moodle/moodle"
+          default: https://github.com/moodle/moodle
         gitRevision:
           title: Revisión Git
           type: string
           description: Rama o tag de Git a utilizar
-          default: "MOODLE_311_STABLE"
+          default: MOODLE_311_STABLE
         imageName:
           title: Nombre de la Imagen
           type: string
           description: Ruta de la imagen en el registro
-          default: "image-registry.openshift-image-registry.svc:5000/maximilianopizar-2-dev/moodle"
+          default: image-registry.openshift-image-registry.svc:5000/maximilianopizar-2-dev/moodle
         pathContext:
           title: Contexto de Build
           type: string
           description: Ruta del contexto para la construcción de la imagen
-          default: "."
+          default: .
         version:
           title: Versión
           type: string
           description: Versión de PHP a utilizar
-          default: "maximilianopizar-2-dev/php-74"
+          default: maximilianopizar-2-dev/php-74
         externalUrl:
           title: URL Externa
           type: string
           description: URL externa para acceder a la aplicación Moodle
-          default: "moodle-maximilianopizar-2-dev.apps.rm2.thpm.p1.openshiftapps.com"
+          default: moodle-maximilianopizar-2-dev.apps.rm2.thpm.p1.openshiftapps.com
         orgName:
           title: Nombre de la Organización GitHub
           type: string
           description: Nombre de la organización para los repositorios
-          default: "maximilianoPizarro"
+          default: maximilianoPizarro
         codeRepoName:
           title: Nombre del Repositorio de Código
           type: string
           description: Nombre del repositorio de código de salida
-          default: "code-{{ parameters.appName }}"
+          default: code-{{ parameters.appName }}
         gitopsRepoName:
           title: Nombre del Repositorio GitOps
           type: string
           description: Nombre del repositorio GitOps de salida
-          default: "gitops-{{ parameters.appName }}"
+          default: gitops-{{ parameters.appName }}
         namespace:
           title: Namespace Kubernetes
           type: string
           description: Namespace donde se ejecutará el pipeline
-          default: "default"
+          default: default
+        owner:
+          title: Propietario
+          type: string
+          description: Nombre del propietario del repositorio
+          default: admin          
   steps:
     - id: create-gitops-repo
       name: Crear Repositorio GitOps
@@ -107,6 +117,13 @@ spec:
           PATH_CONTEXT: {{ parameters.pathContext }}
           VERSION: {{ parameters.version }}
           EXTERNAL_URL: {{ parameters.externalUrl }}
+    - id: apply-pipeline-manifest
+      name: Aplicar Manifiesto del Pipeline
+      action: kubernetes:apply
+      input:
+        namespace: {{ parameters.namespace }}
+        manifests:
+          - path/to/tekton/pipeline.yaml
   output:
     links:
       - title: Repositorio GitOps
