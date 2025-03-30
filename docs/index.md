@@ -1,4 +1,3 @@
-
 # Moodle on Red Hat OpenShift Dedicated
 
 El propósito de este proyecto consiste en autogenerar los objetos kubernetes y deployar en un ambiente de Dev, en base al codigo fuente del repositorio oficial [Moodle](https://github.com/moodle/moodle) por medio de un Pipeline [Tekton](https://tekton.dev/) para el despliegue sobre las plataformas de contenedores [Kubernetes](https://kubernetes.io/) que cuenten con el Operador de Pipelines Instalado.
@@ -57,25 +56,17 @@ NOTA: Puede modificar los parametros desde el objeto moodle dentro del archivo p
 ```
 
 
-
 ## Instalación Moodle
 
 0. Desde la vista Topology seleccionar la aplicación moodle en donde encontraremos al dns del sitio.
 
-
-
 1. Vemos que comple los requerimientos mínimos y seleccionamos continuar.
-
 
 2. Generamos la cuenta administrador principal del sitio.
 
-
 3. Configuramos el nombre y la region.
 
-
 4. Vamos a recibir un correo de moodle con la confirmación del sitio, aceptamos los términos y condiciones.
-
-
 
 5. Autenticamos con las credenciales del administrador principal y listo.
 
