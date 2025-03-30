@@ -94,6 +94,11 @@ spec:
       input:
         repoUrl: github.com/${{ parameters.orgName }}/${{ parameters.gitopsRepoName }}
         sourcePath: https://github.com/maximilianoPizarro/moodle/tree/main
+        owner: ${{ parameters.owner }}
+        sourcePath: https://github.com/maximilianoPizarro/moodle/tree/main
+        visibility: public # O "private" si quieres que el repo sea privado
+        defaultBranch: main
+        allowExistingRepo: true        
     - id: create-code-repo
       name: Crear Repositorio de Código
       action: publish:github
@@ -101,6 +106,7 @@ spec:
         repoUrl: github.com/${{ parameters.orgName }}/${{ parameters.codeRepoName }}
         sourcePath: ${{ parameters.gitRepo }}
         branch: ${{ parameters.gitRevision }}
+        owner: ${{ parameters.owner }}        
     - id: tekton-pipeline
       name: Configurar Tekton Pipeline
       action: tekton:apply
