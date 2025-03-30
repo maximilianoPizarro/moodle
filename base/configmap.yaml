@@ -41,7 +41,7 @@ data:
       );
 
 
-      $CFG->wwwroot   = 'https://moodle-maximilianopizar-2-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com';
+      $CFG->wwwroot   = 'https://moodle-maximilianopizar-2-dev.apps.rm2.thpm.p1.openshiftapps.com';
       $CFG->sslproxy = 1;
 
 

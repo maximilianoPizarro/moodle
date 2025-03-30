@@ -170,7 +170,7 @@ spec:
     - default: maximilianopizar-2-dev/php-74
       name: VERSION
       type: string
-    - default: moodle-maximilianopizar-2-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com
+    - default: moodle-maximilianopizar-2-dev.apps.rm2.thpm.p1.openshiftapps.com
       name: EXTERNAL_URL
       type: string
   tasks:

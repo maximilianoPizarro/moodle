@@ -51,14 +51,14 @@ pipeline.tekton.dev/moodle configured
 
 ```bash
 IMAGE_NAME=image-registry.openshift-image-registry.svc:5000/<NAMESPACE>/moodle
-EXTERNAL_URL=moodle-<NAMESPACE>.apps.sandbox-m2.ll9k.p1.openshiftapps.com
+EXTERNAL_URL=moodle-<NAMESPACE>.apps.rm2.thpm.p1.openshiftapps.com
 VERSION=<NAMESPACE>-dev/php-74
 ```
 
 ```bash
 Output:
 IMAGE_NAME=image-registry.openshift-image-registry.svc:5000/maximilianopizar-2-dev/moodle
-EXTERNAL_URL=moodle-maximilianopizar-2-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com
+EXTERNAL_URL=moodle-maximilianopizar-2-dev.apps.rm2.thpm.p1.openshiftapps.com
 VERSION=maximilianopizar-2-dev/php-74
 ```
 
@@ -85,7 +85,7 @@ NOTA: Puede modificar los parametros desde el objeto moodle dentro del archivo p
 
 ```bash
   $CFG->dbhost    = 'mariadb.<NAMESPACE>-dev.svc.cluster.local';
-  $CFG->wwwroot   = 'https://moodle-<NAMESPACE>-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com';
+  $CFG->wwwroot   = 'https://moodle-<NAMESPACE>-dev.apps.rm2.thpm.p1.openshiftapps.com';
 ```
 
 <p align="left">
