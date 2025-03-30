@@ -105,22 +105,8 @@ spec:
       input:
         allowedHosts:
           - github.com      
-        repoUrl: github.com/${{ parameters.orgName }}/${{ parameters.gitopsRepoName }}.git
+        repoUrl: ${{ parameters.repoUrl }}
         sourcePath: https://github.com/maximilianoPizarro/moodle/tree/main
-        owner: ${{ parameters.owner }}
-        visibility: public # O "private" si quieres que el repo sea privado
-        defaultBranch: main
-        allowExistingRepo: true        
-    - id: create-code-repo
-      name: Crear Repositorio de Código
-      action: publish:github
-      input:
-        allowedHosts:
-          - github.com            
-        repoUrl: github.com/${{ parameters.orgName }}/${{ parameters.codeRepoName }}.git
-        sourcePath: ${{ parameters.gitRepo }}
-        branch: ${{ parameters.gitRevision }}
-        owner: ${{ parameters.owner }}        
     - id: tekton-pipeline
       name: Configurar Tekton Pipeline
       action: tekton:apply
@@ -135,16 +121,16 @@ spec:
           PATH_CONTEXT: ${{ parameters.pathContext }}
           VERSION: ${{ parameters.version }}
           EXTERNAL_URL: ${{ parameters.externalUrl }}
-    - id: apply-pipeline-manifest
-      name: Aplicar Manifiesto del Pipeline
-      action: kubernetes:apply
+    - id: register
+      name: Register
+      action: catalog:register
       input:
-        namespace: ${{ parameters.namespace }}
-        manifests:
-          - path/to/tekton/pipeline.yaml
+        repoContentsUrl: ${{ steps.publish.output.repoContentsUrl }}
+        catalogInfoPath: "/catalog-info.yaml"
   output:
     links:
-      - title: Repositorio GitOps
-        url: https://github.com/${{ parameters.orgName }}/${{ parameters.gitopsRepoName }}
-      - title: Repositorio de Código
-        url: https://github.com/${{ parameters.orgName }}/${{ parameters.codeRepoName }}
+      - title: Repository
+        url: ${{ steps.publish.output.remoteUrl }}
+      - title: Open in catalog
+        icon: catalog
+        entityRef: ${{ steps.register.output.entityRef }}
