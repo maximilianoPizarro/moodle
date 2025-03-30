@@ -71,12 +71,12 @@ spec:
           title: Nombre del Repositorio de Código
           type: string
           description: Nombre del repositorio de código de salida
-          default: code-{{ parameters.appName }}
+          default: code-${{ parameters.appName }}
         gitopsRepoName:
           title: Nombre del Repositorio GitOps
           type: string
           description: Nombre del repositorio GitOps de salida
-          default: gitops-{{ parameters.appName }}
+          default: gitops-${{ parameters.appName }}
         namespace:
           title: Namespace Kubernetes
           type: string
@@ -92,39 +92,39 @@ spec:
       name: Crear Repositorio GitOps
       action: publish:github
       input:
-        repoUrl: github.com/{{ parameters.orgName }}/{{ parameters.gitopsRepoName }}
+        repoUrl: github.com/${{ parameters.orgName }}/${{ parameters.gitopsRepoName }}
         sourcePath: https://github.com/maximilianoPizarro/moodle/tree/main
     - id: create-code-repo
       name: Crear Repositorio de Código
       action: publish:github
       input:
-        repoUrl: github.com/{{ parameters.orgName }}/{{ parameters.codeRepoName }}
-        sourcePath: {{ parameters.gitRepo }}
-        branch: {{ parameters.gitRevision }}
+        repoUrl: github.com/${{ parameters.orgName }}/${{ parameters.codeRepoName }}
+        sourcePath: ${{ parameters.gitRepo }}
+        branch: ${{ parameters.gitRevision }}
     - id: tekton-pipeline
       name: Configurar Tekton Pipeline
       action: tekton:apply
       input:
-        namespace: {{ parameters.namespace }}
+        namespace: ${{ parameters.namespace }}
         pipelineRef: moodle
         parameters:
-          APP_NAME: {{ parameters.appName }}
-          GIT_REPO: {{ parameters.gitRepo }}
-          GIT_REVISION: {{ parameters.gitRevision }}
-          IMAGE_NAME: {{ parameters.imageName }}
-          PATH_CONTEXT: {{ parameters.pathContext }}
-          VERSION: {{ parameters.version }}
-          EXTERNAL_URL: {{ parameters.externalUrl }}
+          APP_NAME: ${{ parameters.appName }}
+          GIT_REPO: ${{ parameters.gitRepo }}
+          GIT_REVISION: ${{ parameters.gitRevision }}
+          IMAGE_NAME: ${{ parameters.imageName }}
+          PATH_CONTEXT: ${{ parameters.pathContext }}
+          VERSION: ${{ parameters.version }}
+          EXTERNAL_URL: ${{ parameters.externalUrl }}
     - id: apply-pipeline-manifest
       name: Aplicar Manifiesto del Pipeline
       action: kubernetes:apply
       input:
-        namespace: {{ parameters.namespace }}
+        namespace: ${{ parameters.namespace }}
         manifests:
           - path/to/tekton/pipeline.yaml
   output:
     links:
       - title: Repositorio GitOps
-        url: https://github.com/{{ parameters.orgName }}/{{ parameters.gitopsRepoName }}
+        url: https://github.com/${{ parameters.orgName }}/${{ parameters.gitopsRepoName }}
       - title: Repositorio de Código
-        url: https://github.com/{{ parameters.orgName }}/{{ parameters.codeRepoName }}
+        url: https://github.com/${{ parameters.orgName }}/${{ parameters.codeRepoName }}
