@@ -4,12 +4,8 @@ metadata:
   name: moodle-template
   title: Moodle Software Template
   description: Plantilla para configurar un pipeline de Tekton para Moodle
-  annotations:
-    backstage.io/techdocs-ref: dir:.
-    backstage.io/kubernetes-id: moodle
-    backstage.io/tekton-enabled: "true"
 spec:
-  owner: {{ parameters.owner }}
+  owner: group:default/maximilianopizarro
   type: service
   parameters:
     - title: Información del Pipeline
