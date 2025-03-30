@@ -10,7 +10,7 @@ metadata:
     backstage.io/kubernetes-id: moodle
     backstage.io/tekton-enabled: "true"
 spec:
-  owner: {{ parameters.owner }}
+  owner: group:default/maximilianopizarro
   type: service
   parameters:
     - title: Información del Pipeline
@@ -93,14 +93,12 @@ spec:
       action: publish:github
       input:
         repoUrl: github.com/{{ parameters.orgName }}/{{ parameters.gitopsRepoName }}
-        owner: {{ parameters.owner }}
         sourcePath: https://github.com/maximilianoPizarro/moodle/tree/main
     - id: create-code-repo
       name: Crear Repositorio de Código
       action: publish:github
       input:
         repoUrl: github.com/{{ parameters.orgName }}/{{ parameters.codeRepoName }}
-        owner: {{ parameters.owner }}
         sourcePath: {{ parameters.gitRepo }}
         branch: {{ parameters.gitRevision }}
     - id: tekton-pipeline
