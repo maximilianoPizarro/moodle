@@ -81,6 +81,11 @@ spec:
             allowedHosts:
               - github.com
   steps:
+    - id: template
+      name: Fetch Skeleton + Template
+      action: fetch:template
+      input:
+        url: ./  
     - id: create-gitops-repo
       name: Crear Repositorio GitOps
       action: publish:github
@@ -88,11 +93,6 @@ spec:
         allowedHosts:
           - github.com      
         repoUrl: ${{ parameters.repoUrl }}
-        sourcePath: https://github.com/maximilianoPizarro/moodle/tree/main
-        owner: ${{ parameters.owner }}
-        visibility: public
-        defaultBranch: main
-        allowExistingRepo: true        
     - id: tekton-pipeline
       name: Configurar Tekton Pipeline
       action: tekton:apply
