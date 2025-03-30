@@ -56,11 +56,6 @@ NOTA: Puede modificar los parametros desde el objeto moodle dentro del archivo p
   $CFG->wwwroot   = 'https://moodle-<NAMESPACE>-dev.apps.rm2.thpm.p1.openshiftapps.com';
 ```
 
-<p align="left">
-  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/configphp.PNG?raw=true" width="900" title="configmap">
-  <img src="https://github.com/maximilianoPizarro/moodle/blob/main/screenshot/restart-rollout.PNG?raw=true" width="900" title="rollout">  
-</p>
-
 
 
 ## Instalación Moodle
