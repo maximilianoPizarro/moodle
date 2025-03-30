@@ -91,10 +91,7 @@ spec:
           description:  ${{ parameters.description }}
           destination: ${{ parameters.repoUrl | parseRepoUrl }}
           owner: ${{ parameters.owner }}
-          namespace: ${{ parameters.namespace }}
-          # cluster: {{ cluster_subdomain }}
-          host: ${{ parameters.repo.host }}
-          destination_own: ${{ parameters.repo.owner }}          
+          namespace: ${{ parameters.namespace }}   
     - id: create-gitops-repo
       name: Crear Repositorio GitOps
       action: publish:github
