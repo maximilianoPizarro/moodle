@@ -161,16 +161,16 @@ spec:
       name: GIT_REVISION
       type: string
     - default: >-
-        image-registry.openshift-image-registry.svc:5000/rh-ee-mapizarr-dev/moodle
+        image-registry.openshift-image-registry.svc:5000/maximilianopizar-2-dev/moodle
       name: IMAGE_NAME
       type: string
     - default: .
       name: PATH_CONTEXT
       type: string
-    - default: rh-ee-mapizarr-dev/php-74
+    - default: maximilianopizar-2-dev/php-74
       name: VERSION
       type: string
-    - default: moodle-rh-ee-mapizarr-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com
+    - default: moodle-maximilianopizar-2-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com
       name: EXTERNAL_URL
       type: string
   tasks:

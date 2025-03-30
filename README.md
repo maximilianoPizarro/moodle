@@ -57,9 +57,9 @@ VERSION=<NAMESPACE>-dev/php-74
 
 ```bash
 Output:
-IMAGE_NAME=image-registry.openshift-image-registry.svc:5000/maximilianopizarro5-dev/moodle
-EXTERNAL_URL=moodle-maximilianopizarro5-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com
-VERSION=maximilianopizarro5-dev/php-74
+IMAGE_NAME=image-registry.openshift-image-registry.svc:5000/maximilianopizar-2-dev/moodle
+EXTERNAL_URL=moodle-maximilianopizar-2-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com
+VERSION=maximilianopizar-2-dev/php-74
 ```
 
 <p align="left">

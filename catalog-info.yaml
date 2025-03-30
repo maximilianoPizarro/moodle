@@ -6,7 +6,7 @@ metadata:
   annotations:
     github.com/project-slug: maximilianopizarro/moodle
     backstage.io/techdocs-ref: dir:.
-    backstage.io/kubernetes-namespace: maximilianopizarro5-dev
+    backstage.io/kubernetes-namespace: maximilianopizar-2-dev
     backstage.io/kubernetes-id: moodle
     janus-idp.io/tekton : moodle
     backstage.io/kubernetes-label-selector: 'app=moodle'
