@@ -1,0 +1,9 @@
+site_name: Moodle
+site_url: https://moodle-maximilianopizar-2-dev.apps.rm2.thpm.p1.openshiftapps.com
+site_author: Maximiliano Pizarro
+site_description: "A clean, responsive theme for static documentation websites that are generated with MkDocs"
+repo_url: "https://github.com/maximilianoPizarro/moodle"
+
+nav:
+  - Home: index.md
+theme: readthedocs
