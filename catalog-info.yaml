@@ -6,7 +6,7 @@ metadata:
   description: ${{values.description | dump}}
   {%- endif %}
   annotations:
-    github.com/project-slug: ${{values.destination.owner + "/" + values.destination.repo}}
+    github.com/project-slug: ${{values.owner + "/" + values.destination | dump}}
     backstage.io/techdocs-ref: dir:.
     backstage.io/kubernetes-namespace: ${{values.namespace | dump}}
     backstage.io/kubernetes-id: ${{values.component_id | dump}}
@@ -20,7 +20,7 @@ metadata:
       icon: web
     - url: https://moodle-maximilianopizar-2-dev.apps.rm2.thpm.p1.openshiftapps.com
       title: Moodle Url
-      icon: web
+      icon: maximilianopizar-2-dev.
   tags:
     - template
     - tekton
